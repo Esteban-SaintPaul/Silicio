@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/silicio/!svn/ver/27/iso-Silicio/iso/boot
+END
+keyb.bin
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/silicio/!svn/ver/10/iso-Silicio/iso/boot/keyb.bin
+END
+start.bin
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/silicio/!svn/ver/21/iso-Silicio/iso/boot/start.bin
+END
+kernel.bin
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/silicio/!svn/ver/27/iso-Silicio/iso/boot/kernel.bin
+END
+ikeyb.bin
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/silicio/!svn/ver/10/iso-Silicio/iso/boot/ikeyb.bin
+END
+background.bmp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/silicio/!svn/ver/18/iso-Silicio/iso/boot/background.bmp
+END
+video.bin
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/silicio/!svn/ver/10/iso-Silicio/iso/boot/video.bin
+END

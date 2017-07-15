@@ -1,0 +1,113 @@
+echo "kernel Silicio ... "
+echo "Configurando entorno de compilación"
+echo "- Verificando ejecutables"
+
+if [ -f error ] ; then rm error;
+fi
+if [ -f GNUmakefile ] ; then rm GNUmakefile;
+fi
+if [ -f GNUmakefile.cfg ] ; then rm GNUmakefile.cfg;
+fi
+
+if (nasm -v >> /dev/null) 2> /dev/null ;
+ then echo "Nasm	ok";
+      AS="nasm"
+ else echo "Nasm	error"
+      echo "No se encuentra nasm en su sistema" >> error;
+fi 
+if (gcc -v >> /dev/null) 2> /dev/null ;
+ then echo "Gcc	ok";
+      CC=gcc;
+      FLAGS='-I../include -Wall -Werror -nostdlib -nostartfiles -nodefaultlibs -fno-builtin'
+ else echo "Gcc	error"
+      echo "No se encuentra gcc en su sistema" >> error;
+fi
+
+if (ld -v >> /dev/null) 2> /dev/null ;
+ then echo "ld	ok";
+      LD="ld"
+ else echo "ld	error"
+      echo "No se encuentra ld en su sistema" >> error;
+fi 
+
+
+if (make -v >> /dev/null) 2> /dev/null ;
+ then echo "Make	ok";
+ else echo "Make	error"
+      echo "No se encuentra make en su sistema" >> error;
+fi
+
+if (rm --version >> /dev/null) 2> /dev/null ;
+ then echo "rm	ok";
+ else echo "rm	error"
+      echo "No se encuentra rm en su sistema" >> error;
+fi
+
+if (cat --version >> /dev/null) 2> /dev/null ;
+ then echo "cat	ok";
+ else echo "cat	error"
+      echo "No se encuentra cat en su sistema" >> error;
+touch error;
+fi
+
+if (xorrisofs --version >> /dev/null) 2> /dev/null ;
+ then echo "xorrisofs	ok";
+      MKISO=xorrisofs;
+ else echo "xorrisofs	error"
+      echo "No se encuentra xorrisofs en su sistema" >> error;
+fi
+
+echo ""
+echo "Resultado :"
+if [ -f error ] ;then cat error
+else 
+echo "- Creando GNUmakefile"
+
+echo AS=$AS >> GNUmakefile.cfg
+echo LD=$LD >> GNUmakefile.cfg
+echo CC=$CC >> GNUmakefile.cfg
+echo MKISO=$MKISO >> GNUmakefile.cfg
+echo FLAGS=$FLAGS >> GNUmakefile.cfg
+
+echo "Silicio :" >> GNUmakefile
+echo "	make -C fd" >> GNUmakefile
+echo "#	make -C keyb" >> GNUmakefile
+echo "	make -C stdio" >> GNUmakefile
+echo "	make -C file" >> GNUmakefile
+echo "	make -C asm" >> GNUmakefile
+echo "	make -C int" >> GNUmakefile
+echo "	make -C mm" >> GNUmakefile
+echo "	make -C exec" >> GNUmakefile
+echo "	make -C main" >> GNUmakefile
+echo "	make -C kernel">> GNUmakefile
+echo "" >> GNUmakefile
+echo "clean :" >> GNUmakefile
+echo "	rm */*.o" >> GNUmakefile
+echo "	rm kernel/kernel.bin" >> GNUmakefile
+echo "" >> GNUmakefile
+echo "cdrom:" >> GNUmakefile
+echo "	make -C iso-Silicio cdrom" >> GNUmakefile
+echo "" >> GNUmakefile
+echo "cero :" >> GNUmakefile
+echo "	rm GNUmakefile" >> GNUmakefile
+echo "	rm GNUmakefile.cfg" >> GNUmakefile
+echo "	rm */*.o" >> GNUmakefile
+echo "	rm kernel/kernel.bin" >> GNUmakefile
+echo "	rm iso-Silicio/Silicio.iso" >> GNUmakefile
+echo "qemu :" >> GNUmakefile
+echo "	make -C iso-Silicio qemu" >> GNUmakefile
+echo "bochs :" >> GNUmakefile
+echo "	make -C iso-Silicio bochs" >> GNUmakefile
+
+
+
+
+echo ""
+echo "Su sistema se encuentra apto para la compilación de Silicio"
+echo ""
+echo "Ahora pruebe con la ejecución de make"
+echo "# make"
+echo ""
+fi
+
+	

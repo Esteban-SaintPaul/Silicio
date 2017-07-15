@@ -1,0 +1,1 @@
+qemu -cdrom Silicio.iso -boot d -m 32

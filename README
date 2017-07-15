@@ -1,0 +1,48 @@
+--------------------------------------------------------
+Gracias por probar Silicio, un kernel modesto que corre
+en máquinas con plataforma x86 
+--------------------------------------------------------
+
+Pasos para la compilación
+
+
+- Para configurar el sistema:
+
+# ./configure
+(Si no existieron errores proseguir).
+
+- Para compilar:
+
+# make
+
+(En caso de correcta compilación encontrará un archivo de 
+nombre "kernel.bin" dentro del directorio "kernel" que será en un futuro 
+el kernel binario de Silicio).
+
+Para volver a compilar luego de modificar algún archivo use make 
+nuevamente:
+ # make
+
+Si quiere recompilar el kernel completo debe limpiar los archivos 
+objeto con la orden:
+
+ # make clean
+
+Características de esta versión
+
+- Conmuta a modo protegido en ASM
+- Calcula la memoria Ram del sistema en C
+- Define la interrupciones en C
+- Inicia un manejador de tareas rudimentario para probar la multitarea 
+en C
+- Configura el 8259A para controlar interrupciones hardware en ASM
+- Inicia las interrupciones en C
+- Inicia tareas en ASM "en proceso a C"
+
+
+Terminar de setear la gdt con set_desc_ldt(11) que escribe
+en la gdt, un descriptor apuntando a la ldt, en el descriptor 11
+antes de iniciar cualquier tarea
+
+
+presione "q" para salir

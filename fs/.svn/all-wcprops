@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 23
+/silicio/!svn/ver/10/fs
+END
+ramdisk.img
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/silicio/!svn/ver/1/fs/ramdisk.img
+END
+GNUmakefile
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/silicio/!svn/ver/10/fs/GNUmakefile
+END
+fs.c
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/silicio/!svn/ver/1/fs/fs.c
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/silicio/!svn/ver/1/fs/README
+END

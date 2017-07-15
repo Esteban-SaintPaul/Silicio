@@ -1,0 +1,4 @@
+#!/bin/bash
+rm GNUmakefile.cfg
+rm GNUmakefile
+./configure

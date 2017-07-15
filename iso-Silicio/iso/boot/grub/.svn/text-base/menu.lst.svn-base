@@ -1,0 +1,19 @@
+default		0
+timeout		1
+
+title		Silicio SO.
+#root		(hd0,0)
+kernel		/boot/kernel.bin
+module		/boot/start.bin
+module		/boot/keyb.bin
+module		/boot/video.bin
+module		/boot/background.bmp
+
+#vbeset 800x600x24
+#vbeset	0x115
+
+#vbeset 640x480x24
+vbeset	0x112
+
+#savedefault
+

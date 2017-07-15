@@ -1,0 +1,2 @@
+all:
+	less README
