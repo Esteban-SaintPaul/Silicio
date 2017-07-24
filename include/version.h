@@ -1,1 +1,1 @@
-#define version() "Ver 0.28 - Rev. Svn 28"
+#define version() "Ver 0.29 - Rev. Git 0.3"

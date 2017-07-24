@@ -86,7 +86,7 @@ void clear_tss(tss* t);
 unsigned long tarea_libre();
 unsigned long driver_libre();
 extern unsigned long driver_off;
-unsigned long t_indice;	//Variable que guarda el indice a la tarea 
+unsigned long t_indice;	//Variable que guarda el indice a la tarea
 			// que se encuentra corriendo
 unsigned long check_addr(unsigned long addr,run *run_t);
 
@@ -183,7 +183,7 @@ void sys_call(){
 llamada %d\n", r_tareas[t_indice].name,t_indice,eax);
 		}
 		/* Salto al administrador de tareas */
-		ljmp_call(0x20);	
+		ljmp_call(0x20);
 	}while(1);
 	return;
 }
@@ -201,7 +201,7 @@ int sys_ret(	unsigned long eax, \
 		if(r_drv[i].id_drv == t_indice) break; // busco el registro del driver
 	}
 	if(i == MAX_DRIVERS) return (-1);
-	
+
 	// copio el identificador del proceso de retorno
 	id = r_drv[i].id_ret;
 
@@ -220,12 +220,12 @@ int sys_ret(	unsigned long eax, \
 	}
 
 	// despierto el proceso dormido
-	r_tareas[id].status = RUNNING;	
-	
+	r_tareas[id].status = RUNNING;
+
 	// Duermo el driver
 	r_tareas[t_indice].status = WAITING;
 
-	return(0);	
+	return(0);
 }
 
 int sys_mem(unsigned long eax, \
@@ -279,8 +279,8 @@ int sys_reg(	unsigned long eax, \
 	}
 	if( i < MAX_DRIVERS) return(-1);
 
-	// El sistema registrara el 0, 1 y 2 como dispositivos estandard 
-	// indicado desde linea de comandos o algo asi, veremos ??? 
+	// El sistema registrara el 0, 1 y 2 como dispositivos estandard
+	// indicado desde linea de comandos o algo asi, veremos ???
 	for(i=3; i < MAX_DRIVERS;i++){
 		if(r_drv[i].id_drv == 0) break;
 	}
@@ -312,10 +312,10 @@ int sys_reg(	unsigned long eax, \
 	strcpy("/dev/",r_drv[i].arch);
 	strcat( r_drv[i].arch, arch);
 	r_drv[i].id_drv = t_indice;
-	r_drv[i].buf = buf;	
-	r_drv[i].size = sys->size;	
-	r_drv[i].id_ret = 0;	
-	r_drv[i].sys = sys;	
+	r_drv[i].buf = buf;
+	r_drv[i].size = sys->size;
+	r_drv[i].id_ret = 0;
+	r_drv[i].sys = sys;
 	r_tareas[t_indice].status = WAITING;
 	return(i);
 }
@@ -349,16 +349,16 @@ int sys_read(unsigned long eax, \
 	aux=check_addr( ecx, &r_tareas[t_indice]);
 	if(aux == 0) return(-4);
 	p_data = (char*)aux;
-	
+
 	if(edx > 4096) return(-5);
 	if(edx == 0) return(0);
 	aux=check_addr(	ecx+edx-1, &r_tareas[t_indice]);
 	if(aux == 0) return(-6);
 	// Si, esta direccionando bien, ¿que pidio?
-	
+
 	// ponemos a esperar al proceso llamante
 	r_tareas[t_indice].status = WAITING;
-	
+
 	// despertamos la tarea del dispositivo
 	r_tareas[id_drv].status = RUNNING;
 
@@ -385,7 +385,7 @@ int sys_read(unsigned long eax, \
 
 	// guardamos a quien debemos contestar
 	r_drv[ebx].id_ret = t_indice;
-	
+
 	return(ret);
 }
 //------------------------------------------------------------------
@@ -413,7 +413,7 @@ int sys_seek(unsigned long eax, \
 
 	// ponemos a esperar al proceso llamante
 	r_tareas[t_indice].status = WAITING;
-	
+
 	// despertamos la tarea del dispositivo
 	r_tareas[id_drv].status = RUNNING;
 
@@ -425,7 +425,7 @@ int sys_seek(unsigned long eax, \
 
 	// guardamos a quien debemos contestar
 	r_drv[ebx].id_ret = t_indice;
-	
+
 	ret = max;
 	return(ret);
 }
@@ -460,16 +460,16 @@ int sys_write(unsigned long eax, \
 	aux=check_addr( ecx, &r_tareas[t_indice]);
 	if(aux == 0) return(-4);
 	p_data = (char*)aux;
-	
+
 	if(edx > 4096) return(-5);
 	if(edx == 0) return(0);
 	aux=check_addr(	ecx+edx-1, &r_tareas[t_indice]);
 	if(aux == 0) return(-6);
 	// Si, esta direccionando bien, ¿que pidio?
-	
+
 	// ponemos a esperar al proceso llamante
 	r_tareas[t_indice].status = WAITING;
-	
+
 	// despertamos la tarea del dispositivo
 	r_tareas[id_drv].status = RUNNING;
 
@@ -494,7 +494,7 @@ int sys_write(unsigned long eax, \
 
 	// guardamos a quien debemos contestar
 	r_drv[ebx].id_ret = t_indice;
-	
+
 	return(ret);
 }
 
@@ -526,7 +526,7 @@ int sys_open(	unsigned long eax, \
 	}
 	// Como no tenemos driver de sistema de archivos retornamos aca
 	// sin no encontramos el dispositivo buscado.
-	if(i == MAX_DRIVERS ) return(-7);	
+	if(i == MAX_DRIVERS ) return(-7);
 	//sys_send(); esto es para llamar al fs cuando este.
 	return(i);
 }
@@ -550,7 +550,7 @@ unsigned long check_addr(unsigned long addr,run *run_t){
 
 	if( (acceso & 0x7) != 0x7 ) return(0);
 	acceso &= 0xfffff000;
-	acceso += (addr & 0xfff); 
+	acceso += (addr & 0xfff);
 	return(acceso);
 }
 
@@ -563,7 +563,7 @@ void task_control(void)
 	unsigned short tr;
 	unsigned char acceso;
 	unsigned long seguir;
-	
+
 	// inicio banderas de video desocupado
 	unset_mem(0xb8);
 	unset_mem(0xb9);
@@ -586,9 +586,9 @@ void task_control(void)
 
 				if(r_tareas[t_indice].task==0){t_indice=1;}
 			}
-			// por ultimo, si es una tarea en memoria y 
+			// por ultimo, si es una tarea en memoria y
 			// esta en estado de ejecucion salimos de la
-			// busqueda. La encontramos! 
+			// busqueda. La encontramos!
 			if(r_tareas[t_indice].status == RUNNING){
 				seguir = 1;
 			}
