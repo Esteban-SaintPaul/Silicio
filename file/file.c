@@ -1,5 +1,5 @@
 #include <string.h>
-
+#include <stdio.h>
 #include <multiboot.h>
 /*
 	struct multiboot;
@@ -15,6 +15,9 @@
 /*
 	s_vbe_header;		*/
 
+#define BMP_CENTER_H 100 * 3
+#define BMP_CENTER_V 30 * 3
+
 /*-----------------------------------------------*/
 /* Funciones que abren los modulos vbe y bmp */
 
@@ -23,31 +26,40 @@
 
 void bmp2vbe(s_bmp_header *b, s_vbe_header *v){
 
-	rgb24 *pixel24;
+//	rgb24 *pixel24;
 	rgb32 *pixel32;
 	s_bmp_pixel *bmp_pixel;
 	unsigned long x_scr;
 	unsigned long y_scr;
 	unsigned long x_aux;
 	unsigned long y_aux;
+	char *pixel;
+	char *bmp_color;
 
 	/*Fijo los limites para no escribir mas alla de la pantalla */
 	if(v->x < b->x){x_scr=v->x;} else {x_scr=b->x;}
 	if(v->y < b->y){y_scr=v->y;} else {y_scr=b->y;}
 
-
 	if(v->color == 24){
-		for(y_aux=0; y_aux < y_scr; y_aux++){
-			pixel24=(rgb24 *)v->addr + (y_aux * v->x);
-			bmp_pixel=(s_bmp_pixel *)b->init_img -(y_aux * b->x) + b->xy; 
-			for(x_aux=0; x_aux < x_scr; x_aux++){
-				pixel24->blue=bmp_pixel->blue;
-				pixel24->green=bmp_pixel->green;
-				pixel24->red=bmp_pixel->red;
-				pixel24++;
-				bmp_pixel--;
+		for(y_aux=0; y_aux < y_scr ; y_aux++){
+			pixel=(char *)v->addr + (y_aux * (v->x) * 3)+ BMP_CENTER_H + (v->x * BMP_CENTER_V);
+			bmp_color=(char *)b->init_img + (( b->y - 1 - y_aux) * ((b->x*3)+2) ) ;
+			for(x_aux=0; x_aux < x_scr ; x_aux++){
+				*pixel = *bmp_color;
+				pixel++;
+				bmp_color++;
+				*pixel = *bmp_color;
+				pixel++;
+				bmp_color++;
+				*pixel = *bmp_color;
+				pixel++;
+				bmp_color++;
+
 			}
+//			bmp_color++;
+//			bmp_color++;
 		}
+
 	} else{
 		if(v->color == 32){
 			for(y_aux=0; y_aux < y_scr; y_aux++){
@@ -120,13 +132,13 @@ unsigned long open_mod_bmp(multiboot *multiboot_data, s_bmp_header *bmp_header){
 
 /*Realizar los controles por si no es un bmp y 800x600x24*/
 /*
-printk("bmp_header.char0 = %c\n",bmp_header.char0);
-printk("bmp_header.char1 = %c\n",bmp_header.char1);
-printk("bmp_header.offset = %d\n",bmp_header.offset);
-printk("bmp_header.init_img = 0x%x\n",bmp_header.init_img);
-printk("bmp_header.bit_per_pixel = %d\n",bmp_header.bit_per_pixel);
-printk("bmp_header.size_x = %d\n",bmp_header.size_x);
-printk("bmp_header.size_y = %d\n",bmp_header.size_y);
+printk("bmp_header.char0 = %c\n",bmp_header->char0);
+printk("bmp_header.char1 = %c\n",bmp_header->char1);
+printk("bmp_header.offset = %d\n",bmp_header->offset);
+printk("bmp_header.init_img = 0x%x\n",bmp_header->init_img);
+printk("bmp_header.bit_per_pixel = %d\n",bmp_header->bit_per_pixel);
+printk("bmp_header.size_x = %d\n",bmp_header->x);
+printk("bmp_header.size_y = %d\n",bmp_header->y);
 */
 	return(0);
 }
