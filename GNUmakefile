@@ -17,6 +17,12 @@ clean :
 cdrom:
 	make -C iso-Silicio cdrom
 
+grub-iso:
+	make -C iso-Silicio grub-iso
+
+grub-usb:
+	make -C iso-Silicio grub-usb
+
 cero :
 	rm GNUmakefile
 	rm GNUmakefile.cfg

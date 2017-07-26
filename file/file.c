@@ -15,8 +15,10 @@
 /*
 	s_vbe_header;		*/
 
-#define BMP_CENTER_H 100 * 3
-#define BMP_CENTER_V 30 * 3
+#define BMP_CENTER_H_24 30 * 3
+#define BMP_CENTER_V_24 30 * 3
+#define BMP_CENTER_H_32 10 * 4
+#define BMP_CENTER_V_32 20 * 4
 
 /*-----------------------------------------------*/
 /* Funciones que abren los modulos vbe y bmp */
@@ -42,7 +44,7 @@ void bmp2vbe(s_bmp_header *b, s_vbe_header *v){
 
 	if(v->color == 24){
 		for(y_aux=0; y_aux < y_scr ; y_aux++){
-			pixel=(char *)v->addr + (y_aux * (v->x) * 3)+ BMP_CENTER_H + (v->x * BMP_CENTER_V);
+			pixel=(char *)v->addr + (y_aux * (v->x) * 3)+ BMP_CENTER_H_24 + (v->x * BMP_CENTER_V_24);
 			bmp_color=(char *)b->init_img + (( b->y - 1 - y_aux) * ((b->x*3)+2) ) ;
 			for(x_aux=0; x_aux < x_scr ; x_aux++){
 				*pixel = *bmp_color;
@@ -61,7 +63,7 @@ void bmp2vbe(s_bmp_header *b, s_vbe_header *v){
 		}
 
 	} else{
-		if(v->color == 32){
+		if(v->color == 30){
 			for(y_aux=0; y_aux < y_scr; y_aux++){
 				pixel32=(rgb32 *)v->addr + (y_aux * v->x);
 				bmp_pixel=(s_bmp_pixel *)b->init_img -(y_aux * b->x) + b->xy; 
@@ -71,6 +73,27 @@ void bmp2vbe(s_bmp_header *b, s_vbe_header *v){
 					pixel32->red=bmp_pixel->red;
 					pixel32++;
 					bmp_pixel--;
+				}
+			}
+		} else {
+			if(v->color == 32){
+				for(y_aux=0; y_aux < y_scr ; y_aux++){
+					pixel=(char *)v->addr + (y_aux * (v->x) * 4)+ BMP_CENTER_H_32 + (v->x * BMP_CENTER_V_32);
+					bmp_color=(char *)b->init_img + (( b->y - 1 - y_aux) * ((b->x*3)+2) ) ;
+					for(x_aux=0; x_aux < x_scr ; x_aux++){
+						*pixel = *bmp_color;
+						pixel++;
+						bmp_color++;
+						*pixel = *bmp_color;
+						pixel++;
+						bmp_color++;
+						*pixel = *bmp_color;
+						pixel++;
+						bmp_color++;
+						pixel++;                
+					}
+//					bmp_color++;
+//					bmp_color++;
 				}
 			}
 		}

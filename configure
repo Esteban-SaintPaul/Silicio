@@ -98,6 +98,8 @@ echo "qemu :" >> GNUmakefile
 echo "	make -C iso-Silicio qemu" >> GNUmakefile
 echo "bochs :" >> GNUmakefile
 echo "	make -C iso-Silicio bochs" >> GNUmakefile
+echo "vbox :" >> GNUmakefile
+echo "	make -C iso-Silicio vbox" >> GNUmakefile
 
 
 
