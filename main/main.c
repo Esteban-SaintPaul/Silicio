@@ -5,7 +5,7 @@
 */
 
 #include <stdio.h>
-/*	
+/*
 	cls();
 	printk(char * string, ... );
 */
@@ -91,7 +91,7 @@ void _main( multiboot* multiboot_data )
 	int mod_count;
 	unsigned long aux;
 	unsigned char stack_call[200], stack_control[200];
-	
+
 /*----------------------------------------------------*/
 /* Definiciones para manipular archivo bmp		*/
 
@@ -170,7 +170,7 @@ while(1);
 			0xe5,		\
 			aux - 8,		\
 			0	);
-	
+
 	aux=execs( sys_control, &stack_control[199], "/boot/sys_control.sys");
 	printk("execs()       : Tarea sys_control cargada \[0x%x]\n",aux);
 	add_int(	16,		\

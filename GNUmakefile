@@ -25,5 +25,9 @@ cero :
 	rm iso-Silicio/Silicio.iso
 qemu :
 	make -C iso-Silicio qemu
+
 bochs :
 	make -C iso-Silicio bochs
+
+vbox :
+	make -C iso-Silicio vbox
