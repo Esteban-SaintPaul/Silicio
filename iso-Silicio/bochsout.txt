@@ -1,1 +1,2 @@
-00195308000p[XGUI ] >>PANIC<< POWER button turned off.
+00000000000e[SPEAK] Failed to open /dev/console: Permiso denegado
+00000000000e[SPEAK] Deactivating beep on console

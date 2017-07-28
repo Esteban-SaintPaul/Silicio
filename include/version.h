@@ -1,1 +1,1 @@
-#define version() "Ver 0.29 - Rev. Git 0.3"
+#define version() "Ver 0  Rev 6 - Git tag v0.6"
