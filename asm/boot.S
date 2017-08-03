@@ -314,41 +314,58 @@ stop:
 int_00:
 	push	eax
 	mov	eax,tex_00
+push	eax
+call	printk
+
 	jmp	msj_err
 
 int_01:
 	push	eax
 	mov	eax,tex_01
+push	eax
+call	printk
 	jmp	msj_err
 
 int_02:
 	push	eax
 	mov	eax,tex_02
+push	eax
+call	printk
 	jmp	msj_err
 
 int_03:
 	push	eax
 	mov	eax,tex_03
+push	eax
+call	printk
 	jmp	msj_err
 
 int_04:
 	push	eax
 	mov	eax,tex_04
+push	eax
+call	printk
 	jmp	msj_err
 
 int_05:
 	push	eax
 	mov	eax,tex_05
+push	eax
+call	printk
 	jmp	msj_err
 
 int_06:
 	push	eax
 	mov	eax,tex_06
+push	eax
+call	printk
 	jmp	msj_err
 
 int_07:
 	push	eax
 	mov	eax,tex_07
+push	eax
+call	printk
 	jmp	msj_err
 
 
@@ -356,35 +373,47 @@ int_08:
 	pop dword [interr]
 	push	eax
 	mov	eax,tex_08
+push	eax
+call	printk
 	jmp	msj_err
 
 int_09:
 	push	eax
 	mov	eax,tex_09
+push	eax
+call	printk
 	jmp	msj_err
 
 int_0a:
 	pop dword [interr]
 	push	eax
 	mov	eax,tex_0a
+push	eax
+call	printk
 	jmp	msj_err
 
 int_0b:
 	pop dword [interr]
 	push	eax
 	mov	eax,tex_0b
+push	eax
+call	printk
 	jmp	msj_err
 
 int_0c:
 	pop dword [interr]
 	push	eax
 	mov	eax,tex_0c
+push	eax
+call	printk
 	jmp	msj_err
 
 int_0d:
 	pop dword [interr]
 	push	eax
 	mov	eax,tex_0d
+push	eax
+call	printk
 	jmp	msj_err
 
 int_0e:	

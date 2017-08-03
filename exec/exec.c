@@ -1235,6 +1235,11 @@ void int_soft_speed(){
 		__asm__ __volatile__ ("movl %0, %%eax;"
 					::"g"(i));
 		break;
+	case SYS_HLT:
+		i=vara;
+		__asm__ __volatile__ ("sti;");
+		__asm__ __volatile__ ("hlt;");
+		break;
 	default:
 				printk("Syscall Speed: Proceso %s, Pid %d, no \
 existe llamada %d\n", r_tareas[t_indice].name,t_indice,vara);

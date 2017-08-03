@@ -18,6 +18,7 @@
 #define SYS_VBE_X	209
 #define SYS_VBE_Y	210
 #define SYS_VBE_COLOR	211
+#define SYS_HLT		212
 
 #define SYS_SIZE	512
 

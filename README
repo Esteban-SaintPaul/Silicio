@@ -28,6 +28,21 @@ objeto con la orden:
 
  # make clean
 
+Habitualmente al bajar en código del repositorio Git, tendrá la imagen 
+Silicio/iso-Silicio/Silicio.iso ya generada, para correr en algún emulador.
+Para llegara esto se ejecutaron lossiguientes comandos:
+
+./configure	// para configurar el Makefile ( debe dar ok en el chequeo )
+make		// genera el microkernel, lo copia a la carpeta iso
+make grub-iso	// genera la imagen Silicio.iso
+
+El último comando ( meke grub-iso ) utiliza grub2, si no se tiene este 
+bootloader instalado, se puede generar con "make cdrom" que utiliza xorrisofs.
+
+
+
+
+
 Características de esta versión
 
 - Conmuta a modo protegido en ASM
@@ -40,9 +55,6 @@ en C
 - Inicia tareas en ASM "en proceso a C"
 
 
-Terminar de setear la gdt con set_desc_ldt(11) que escribe
-en la gdt, un descriptor apuntando a la ldt, en el descriptor 11
-antes de iniciar cualquier tarea
 
 
 presione "q" para salir
