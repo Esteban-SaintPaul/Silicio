@@ -107,6 +107,7 @@ void _main( multiboot* multiboot_data )
 
 	open_mod_vbe(multiboot_data, &vbe_header);
 
+
 /*----------------------------------------------------*/
 	aux = open_mod_bmp(multiboot_data, &bmp_header);
 	if(aux ==0){

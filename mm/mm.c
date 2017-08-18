@@ -16,6 +16,7 @@ unsigned long mem_off; // pagina desde donde buscar desocupadas
 
 unsigned long ini_mm(){
 	unsigned long pag_grub,pag_kernel,pag_modulos;
+unsigned long pag_video;
 
 	mem_max=testmem();
 	ini_map(mem_map,mem_max);
@@ -25,10 +26,22 @@ unsigned long ini_mm(){
 	}
 
 /* Dejo a disposición de algún proceso las páginas de la mem de video */
-//	pag_video= 0xb8000l / PAG_LEN;
-//	unset_mem(pag_video);
-//	pag_video++;
-//	unset_mem(pag_video);
+	pag_video= 0xFC000l / PAG_LEN;
+	unset_mem(pag_video);
+	pag_video++;
+	unset_mem(pag_video);
+	pag_video++;
+	unset_mem(pag_video);
+	pag_video++;
+	unset_mem(pag_video);
+	pag_video++;
+	unset_mem(pag_video);
+	pag_video++;
+	unset_mem(pag_video);
+	pag_video++;
+	unset_mem(pag_video);
+	pag_video++;
+	unset_mem(pag_video);
 
 	for(	pag_kernel = KERNEL_INI / PAG_LEN ;    \
 		pag_kernel <= KERNEL_FIN / PAG_LEN ; \
@@ -85,10 +98,11 @@ void ini_map(unsigned char map[],unsigned long tope){
 			map[i]=0;
 		}
 		else{
-			map[i]=0xff;
+			map[i]=0; // tengo que liberar la memoria de video y queda muy arriba, mas allá de la RAM física
+//			map[i]=0xff;
 		}
 	}
-	return;	
+	return;
 }
 
 unsigned long set_mem(unsigned long pagina){

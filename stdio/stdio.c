@@ -70,7 +70,6 @@ void printk ( char *format , ... )
 					break;
 				case 's':
 					s = va_arg(parg,char *);
-					
 					while ( *s != 0 )
 					{
 						putc ( *s );
@@ -94,7 +93,7 @@ void itoa (char *buf, int base, int d)
 	int divisor = 10;
 	int resto;
 	int i;
-	
+
 	ud = d;
 	p = buf;
 	i = 0;
@@ -132,7 +131,7 @@ void itoa (char *buf, int base, int d)
 	{
 		i--;
 		*p = a[i];
-		p++;		
+		p++;
 	}
 	*p = 0;
 }
@@ -334,7 +333,7 @@ void putc ( int c )
 				c= vbe_header.color / 8;
 				a= b * c;
 				memset( (char *)z , a,	0);
-			    } 
+			    }
 			    else{
 				a= (unsigned long) vbe_header.addr;
 				b= vbe_header.x * 2;
@@ -356,7 +355,7 @@ void putc ( int c )
 	}else{
 		bmp2graf( c, font.addr , (xpos * font.x), (ypos * font.y),\
 				0xf0,0xf0,0x80 );
-	}	
+	}
 	xpos++;
 	if (xpos >= x)
 		goto newline;
@@ -374,12 +373,12 @@ void bmp2graf(int c, char *tab, unsigned long x,unsigned long \
 	let = &tab[c * font.y];
 	cor = (y * vbe_header.x) + x;
 
-	if(vbe_header.color == 24){	
+	if(vbe_header.color == 24){
 		for(y_aux=0; y_aux < font.y; y_aux++){
 			pixel24=(rgb24 *)vbe_header.addr + \
 				(y_aux * vbe_header.x) + cor;
 			for(x_aux=0;x_aux < font.x;x_aux++){
-				if( ((let[y_aux]>> x_aux) & 0x1) == 0x1){	
+				if( ((let[y_aux]>> x_aux) & 0x1) == 0x1){
 					pixel24->blue=b;
 					pixel24->green=g;
 					pixel24->red=r;
@@ -392,7 +391,7 @@ void bmp2graf(int c, char *tab, unsigned long x,unsigned long \
 			pixel32=(rgb32 *)vbe_header.addr + \
 				(y_aux * vbe_header.x) + cor;
 			for(x_aux=0;x_aux < font.x;x_aux++){
-				if( ((let[y_aux]>> x_aux) & 0x1) == 0x1){	
+				if( ((let[y_aux]>> x_aux) & 0x1) == 0x1){
 					pixel32->blue=b;
 					pixel32->green=g;
 					pixel32->red=r;

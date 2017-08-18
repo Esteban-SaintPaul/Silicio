@@ -172,7 +172,8 @@ void sys_call(){
 				break;
 			case SYS_MEM :
 				ret = sys_mem(eax,ebx,ecx,edx);
-				//printk("sys_mem %d\n",ret);
+				r_tareas[t_indice].task_tss->eax = ret;
+//				printk("sys_mem %d\n",ret);
 				break;
 			case SYS_SEEK :
 				ret = sys_seek(eax,ebx,ecx,edx);
@@ -234,24 +235,74 @@ int sys_mem(unsigned long eax, \
 			unsigned long edx  ){
 
 	tss *t;
-	unsigned long *p;
+//	unsigned long aux;
+	unsigned long pedido;
+	unsigned long *dir_pag;	// dirección del directorio de paginas
+	unsigned long *sel_pag;	// dirección del selector de páginas
+	unsigned long pagina;	// indice de pagina dentro del directorio
+
+	// Salvo la página pedida
+	pedido = ebx;
+//printk("pedido %x\n",pedido);
 
 	// si ebx es 0 es que quiere un pagina al azar
-	if(ebx == 0 ){
-		ebx=buscar_mem();
+	if(pedido == 0 ){
+		pedido=buscar_mem();
+		// si no encontramos espacio en memoria retornamos con error
+		if(pedido == 0)return(-1);
 	}
-	// si no encontramos espacio en memoria retornamos con error
-	if(ebx == 0)return(-1);
 
 	// limitamos a los primeros 4Mb
-	if( (ebx >> 22) != 0)return(-2);
+//	if( (ebx >> 10) != 0)return(-2);
 
 	// vemos si esta libre la pagina
-	if( 0 == set_mem(ebx) ){
+	if( 0 == set_mem(pedido) ){
+		// Apunto al tss de la tarea
 		t= r_tareas[t_indice].task_tss;
-		p=(unsigned long*) (t->cr3 & 0xfffff000l);
-		p=(unsigned long*) (p[0] & 0xfffff000l);
-		p[ebx] |= 7;
+		// rescato del registro cr3 la direción de la tabla de páginas
+		dir_pag = (unsigned long*) (t->cr3 & 0xfffff000l);
+		// genero el índice desde el pedido (10 bits , del 10 al 20
+		pagina = pedido >> 10;
+		// rescato del directorio de páginas la dirección del selector de páginas
+		sel_pag=(unsigned long*) ( dir_pag[ pagina ] & 0xfffff000l );
+		// Si la dirección es cero es que no tengo selector de página
+		if ( ((unsigned long) sel_pag & 0x7l) != 0x7 ){ //0x27
+			dir_pag[pagina] |= 0x7l;
+//printk("dir_pag 0x%x = 0x%x\n",pagina,dir_pag[pagina]);
+			pagina = pedido & 0x3ffl;
+//			sel_pag[pagina] = pedido << 12;
+			sel_pag[pagina] |= 0x7l;
+//printk("sel_pag 0x%x = 0x%x\n",pagina,sel_pag[pagina]);
+/*
+return(-5);
+			// tomo una página nueva
+			aux=buscar_mem();
+			set_mem(aux);
+			if(aux == 0) return(-6);
+			// asigno la dirección de la página nueva a sel_pag y a dir_pag[página] (que es el directoro de páginas
+			dir_pag[pagina] = aux << 12;
+			dir_pag[pagina] |= 0x27;
+			sel_pag=(unsigned long*) ( dir_pag[ pagina ] & 0xfffff000l );
+			// la lleno con las direcciones  a partir del pedido en sel_pag[0 -  1024]
+			for (aux = 0; aux < 1024; aux++){
+				sel_pag[aux] = 0;
+			}
+*/
+		}
+
+//printk("dir_pag pagina  %x\n",dir_pag[pagina]);
+/*
+		// le borro los bits de configuración dejando la dirección limpia
+		aux = (unsigned long )sel_pag;
+		aux &= 0xfffff000l;
+		sel_pag = (unsigned long *) aux ;
+
+		// selecciono indice de selector de página desde el pedido (10 bits menos significativos)
+		pagina = pedido & 0x3ffl;
+		sel_pag[pagina] = pedido << 12;
+		sel_pag[pagina] |= 0x7;
+*/
+//printk("sel_pag pagina  %x\n",sel_pag[pagina]);
 		return(0);
 	}
 	// si no estaba libre la pagin retornamos error
