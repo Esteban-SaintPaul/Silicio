@@ -46,7 +46,6 @@ unsigned long pag_video;
 	for(	pag_kernel = KERNEL_INI / PAG_LEN ;    \
 		pag_kernel <= KERNEL_FIN / PAG_LEN ; \
 		pag_kernel++ ){
-		
 		set_mem(pag_kernel);
 	}
 	for( pag_modulos = pag_kernel ; pag_modulos < mem_off ; pag_modulos++ ){
@@ -108,26 +107,26 @@ void ini_map(unsigned char map[],unsigned long tope){
 unsigned long set_mem(unsigned long pagina){
 	unsigned long sector;
 	char bits;
-	
+
 	sector=pagina/8;
 	bits=1 << (pagina%8);
 	if( 0 == (mem_map[sector] & bits)){
 		mem_map[sector]= mem_map[sector] | bits;
 		return(PAG_OK);
 	}
-	return(PAG_ERROR);	
+	return(PAG_ERROR);
 }
 unsigned long unset_mem(unsigned long pagina){
 	unsigned long sector;
 	char bits;
-	
+
 	sector=pagina/8;
 	bits=1 << (pagina%8);
 	if( 0 != (mem_map[sector] & bits)){
 		mem_map[sector]= mem_map[sector] & ~bits;
 		return(PAG_OK);
 	}
-	return(PAG_ERROR);	
+	return(PAG_ERROR);
 }
 
 unsigned long buscar_mem(){

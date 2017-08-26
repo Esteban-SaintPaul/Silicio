@@ -303,7 +303,8 @@ return(-5);
 		sel_pag[pagina] |= 0x7;
 */
 //printk("sel_pag pagina  %x\n",sel_pag[pagina]);
-		return(0);
+		return(pedido);
+//		return(0);
 	}
 	// si no estaba libre la pagin retornamos error
 	return(-3);
