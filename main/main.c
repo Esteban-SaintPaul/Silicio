@@ -124,7 +124,7 @@ printk("[]{}:=\"-.\\/?()_\n");
 printk("ABCDEFGHIJKLMNOPQRSTUVWXYZ\n");
 while(1);
 */
-/*	Seteo desde que lugar de la memoria puedo comenzar a pedir páginas sin 
+/*	Seteo desde que lugar de la memoria puedo comenzar a pedir páginas sin
 	pisar ni el kernel ni los drivers
 */
 	if (multiboot_data->mods_count > 0){

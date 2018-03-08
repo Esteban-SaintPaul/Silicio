@@ -17,7 +17,7 @@ if (nasm -v >> /dev/null) 2> /dev/null ;
 fi 
 if (gcc -v >> /dev/null) 2> /dev/null ;
  then echo "Gcc	ok";
-      CC=gcc;
+      CC=gcc-4.9;
       FLAGS='-I../include -Wall -Werror -nostdlib -nostartfiles -nodefaultlibs -fno-builtin'
  else echo "Gcc	error"
       echo "No se encuentra gcc en su sistema" >> error;
@@ -85,9 +85,19 @@ echo "clean :" >> GNUmakefile
 echo "	rm */*.o" >> GNUmakefile
 echo "	rm kernel/kernel.bin" >> GNUmakefile
 echo "" >> GNUmakefile
+
 echo "cdrom:" >> GNUmakefile
 echo "	make -C iso-Silicio cdrom" >> GNUmakefile
 echo "" >> GNUmakefile
+
+echo "grub-iso:" >> GNUmakefile
+echo "	make -C iso-Silicio grub-iso" >> GNUmakefile
+echo "" >> GNUmakefile
+
+echo "grub-usb:" >> GNUmakefile
+echo "	make -C iso-Silicio grub-usb" >> GNUmakefile
+echo "" >> GNUmakefile
+
 echo "cero :" >> GNUmakefile
 echo "	rm GNUmakefile" >> GNUmakefile
 echo "	rm GNUmakefile.cfg" >> GNUmakefile
