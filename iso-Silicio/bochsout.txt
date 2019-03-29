@@ -1,3 +1,9 @@
 00000000000e[SPEAK] Failed to open /dev/console: Permiso denegado
 00000000000e[SPEAK] Deactivating beep on console
-00336484000p[XGUI ] >>PANIC<< POWER button turned off.
+00186640000e[XGUI ] xkeypress(): keysym f1 unhandled!
+00187084000e[XGUI ] xkeypress(): keysym f1 unhandled!
+00205708000e[XGUI ] xkeypress(): keysym f1 unhandled!
+00206124000e[XGUI ] xkeypress(): keysym f1 unhandled!
+00330144000e[XGUI ] xkeypress(): keysym f1 unhandled!
+00330552000e[XGUI ] xkeypress(): keysym f1 unhandled!
+00459956000p[XGUI ] >>PANIC<< POWER button turned off.

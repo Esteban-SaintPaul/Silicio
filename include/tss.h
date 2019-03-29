@@ -13,9 +13,9 @@
 #define V_DRIVER	0x200
 #define V_USER		0x300
 #define V_STACK		0x3ff
-#define MAX_PAG_DRIVER	8	//original 5
+#define MAX_PAG_DRIVER	14	//original 5, siguiente 16
 #define MAX_DRIVERS	10
-#define MAX_PAG_VIRTUAL	6 // original 2
+#define MAX_PAG_VIRTUAL	14 // original 2, siguiente 6
 
 #define TSS_PORT	256
 

@@ -10,4 +10,5 @@ $(FILE) : $(FILE).bin
 $(FILE).bin : $(OBJ) $(OBJ2)
 	$(LD) -T link.ld -o $(FILE).bin $(OBJ)
 
-	
+cp:
+	cp $(FILE).bin ../iso-Silicio/iso/boot/	
